@@ -6,8 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hero_games/components/gradient_mask.dart';
 
-/// NOT: [MyIcons] finds the icon path from the [assets/icons] folder.
-enum MyIcons {
+/// NOT: [AppIcons] finds the icon path from the [assets/icons] folder.
+enum AppIcons {
   angle_right,
   power,
   check_circle,
