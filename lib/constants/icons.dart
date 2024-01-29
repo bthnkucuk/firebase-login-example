@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hero_games/components/gradient_mask.dart';
 
+/// NOT: [MyIcons] finds the icon path from the [assets/icons] folder.
 enum MyIcons {
   angle_right,
   power,
@@ -19,6 +20,7 @@ enum MyIcons {
 
   String get path => 'assets/icons/$name.svg';
 
+  /// NOT: [toWidget] is a method that returns the icon as a widget.
   Widget toWidget({
     double? size,
     Color? color,
@@ -26,7 +28,7 @@ enum MyIcons {
     VoidCallback? onPressed,
     bool hasGradientMask = false,
   }) {
-    return SvgWidget(
+    return _SvgWidget(
       path: path,
       color: color,
       size: size,
@@ -38,9 +40,8 @@ enum MyIcons {
 }
 
 @immutable
-final class SvgWidget extends StatelessWidget {
-  const SvgWidget({
-    super.key,
+final class _SvgWidget extends StatelessWidget {
+  const _SvgWidget({
     required this.path,
     this.color,
     this.size,
