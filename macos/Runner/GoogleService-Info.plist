@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.heroGames.RunnerTests</string>
+	<string>com.example.firebaseLoginExample.RunnerTests</string>
 	<key>PROJECT_ID</key>
 	<string>hero-games-case</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1034594274722:ios:2657689a52c602fb5ab6fb</string>
+	<string>1:1034594274722:ios:2cd590b6d94796395ab6fb</string>
 </dict>
 </plist>

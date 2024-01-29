@@ -20,6 +20,9 @@ final class CustomTextFormField extends HookWidget {
     this.textInputAction,
     this.readOnly = false,
     this.validator,
+    this.minLines,
+    this.maxLines,
+    this.enabled,
   });
 
   final String? hintText;
@@ -36,6 +39,9 @@ final class CustomTextFormField extends HookWidget {
   final TextInputAction? textInputAction;
   final bool readOnly;
   final String? Function(String?)? validator;
+  final int? minLines;
+  final int? maxLines;
+  final bool? enabled;
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +49,10 @@ final class CustomTextFormField extends HookWidget {
     final tController = controller ?? useTextEditingController();
 
     return TextFormField(
-      autovalidateMode: AutovalidateMode.onUserInteraction,
+      enabled: enabled,
       readOnly: readOnly,
+      minLines: minLines,
+      maxLines: maxLines,
       validator: validator,
       focusNode: focusNode,
       controller: tController,
@@ -78,6 +86,10 @@ final class CustomTextFormField extends HookWidget {
           borderSide: const BorderSide(color: Colors.red),
         ),
         enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.grey),
+        ),
+        disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: Colors.grey),
         ),

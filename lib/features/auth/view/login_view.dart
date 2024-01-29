@@ -22,7 +22,7 @@ class LoginView extends HookConsumerWidget {
     final authNotifier = ref.watch(authProvider.notifier);
 
     ref.listen(authProvider, (_, next) {
-      if (next is ErrorState) {
+      if (next is ErrorState && next != _) {
         showToast(message: next.message);
       }
     });
@@ -30,8 +30,8 @@ class LoginView extends HookConsumerWidget {
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
     final obscurePassword = useState<bool>(false);
-    final emailFormKey = GlobalKey<FormState>();
-    final passwordFormKey = GlobalKey<FormState>();
+    final emailFormKey = GlobalKey<FormState>(debugLabel: 'emailFormKey');
+    final passwordFormKey = GlobalKey<FormState>(debugLabel: 'passwordFormKey');
 
     return PopScope(
       canPop: false,
@@ -71,44 +71,52 @@ class LoginView extends HookConsumerWidget {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            CustomTextFormField(
+                            Form(
                               key: emailFormKey,
-                              hintText: 'Email',
-                              controller: emailController,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter some text';
-                                } else if (!value.isValidEmail) {
-                                  return 'Please enter valid email';
-                                } else {
-                                  return null;
-                                }
-                              },
-                            ),
-                            const SizedBox(height: 16),
-                            CustomTextFormField(
-                              key: passwordFormKey,
-                              obscureText: obscurePassword.value,
-                              hintText: 'Password',
-                              controller: passwordController,
-                              suffix: (obscurePassword.value
-                                      ? AppIcons.eye
-                                      : AppIcons.eye_off)
-                                  .toWidget(
-                                onPressed: () {
-                                  obscurePassword.value =
-                                      !obscurePassword.value;
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              child: CustomTextFormField(
+                                hintText: 'Email',
+                                controller: emailController,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter a valid email.';
+                                  } else if (!value.isValidEmail) {
+                                    return 'Please enter a valid email';
+                                  } else {
+                                    return null;
+                                  }
                                 },
                               ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your password';
-                                } else if (value.length <= 6) {
-                                  return 'Password must be greater than 6 characters';
-                                } else {
-                                  return null;
-                                }
-                              },
+                            ),
+                            const SizedBox(height: 16),
+                            Form(
+                              key: passwordFormKey,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              child: CustomTextFormField(
+                                obscureText: obscurePassword.value,
+                                hintText: 'Password',
+                                controller: passwordController,
+                                suffix: (obscurePassword.value
+                                        ? AppIcons.eye
+                                        : AppIcons.eye_off)
+                                    .toWidget(
+                                  onPressed: () {
+                                    obscurePassword.value =
+                                        !obscurePassword.value;
+                                  },
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your password';
+                                  } else if (value.length < 6) {
+                                    return 'Password must be greater than 6 characters';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              ),
                             ),
                           ],
                         ),

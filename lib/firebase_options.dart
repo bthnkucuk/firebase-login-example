@@ -63,19 +63,19 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDKyN7BxlKjDsyrd4xk0w241TMzYT1nBmE',
-    appId: '1:1034594274722:ios:7e2831c0096548d55ab6fb',
+    appId: '1:1034594274722:ios:f9aaa49e7181e7a95ab6fb',
     messagingSenderId: '1034594274722',
     projectId: 'hero-games-case',
     storageBucket: 'hero-games-case.appspot.com',
-    iosBundleId: 'com.example.heroGames',
+    iosBundleId: 'com.example.firebaseLoginExample',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyDKyN7BxlKjDsyrd4xk0w241TMzYT1nBmE',
-    appId: '1:1034594274722:ios:2657689a52c602fb5ab6fb',
+    appId: '1:1034594274722:ios:2cd590b6d94796395ab6fb',
     messagingSenderId: '1034594274722',
     projectId: 'hero-games-case',
     storageBucket: 'hero-games-case.appspot.com',
-    iosBundleId: 'com.example.heroGames.RunnerTests',
+    iosBundleId: 'com.example.firebaseLoginExample.RunnerTests',
   );
 }

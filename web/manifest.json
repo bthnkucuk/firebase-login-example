@@ -1,6 +1,6 @@
 {
-    "name": "hero_games",
-    "short_name": "hero_games",
+    "name": "firebase_login_example",
+    "short_name": "firebase_login_example",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hero_games/core/exception/app_exceptions.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -11,12 +12,13 @@ class AuthController extends AutoDisposeNotifier<ScreenState> {
 
   Future<void> login(
     GlobalKey<FormState> emailFormKey,
-    passwordFormKey, {
+    GlobalKey<FormState> passwordFormKey, {
     required String email,
     required String password,
   }) async {
     if (!emailFormKey.currentState!.validate() ||
         !passwordFormKey.currentState!.validate()) {
+      print('validate faild');
       return;
     }
 
@@ -24,9 +26,15 @@ class AuthController extends AutoDisposeNotifier<ScreenState> {
 
     try {
       const authService = AuthService();
-      final response = await authService.login(email, password);
+      await authService.login(email, password);
     } catch (e, s) {
-      state = ErrorState(message: 'Unknown Error', stackTrace: s);
+      final String errorMessage;
+      if (e is AppException) {
+        errorMessage = e.message;
+      } else {
+        errorMessage = 'Unknown Error';
+      }
+      state = ErrorState(message: errorMessage, stackTrace: s);
     }
   }
 

@@ -19,12 +19,41 @@ class RegisterView extends HookConsumerWidget {
     // final authNotifier = ref.watch(authProvider.notifier);
 
     final emailController = useTextEditingController();
+    final nameAndSurnameController = useTextEditingController();
+    final biographyController = useTextEditingController();
+    final birthDateController = useTextEditingController();
     final passwordController = useTextEditingController();
     final passwordConfirmController = useTextEditingController();
     final obscurePassword = useState<bool>(false);
     final obscureConfirmPassword = useState<bool>(false);
+    final birthDate = useState<DateTime>(DateTime.now());
 
-    final formKey = GlobalKey<FormState>();
+    // final formKey = GlobalKey<FormState>();
+
+    void showDatePicker() {
+      showCupertinoModalPopup<void>(
+        context: context,
+        builder: (BuildContext context) => Container(
+          height: 216,
+          padding: const EdgeInsets.only(top: 6.0),
+          margin: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          color: CupertinoColors.systemBackground.resolveFrom(context),
+          child: SafeArea(
+            top: false,
+            child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.date,
+                initialDateTime: birthDate.value,
+                onDateTimeChanged: (date) {
+                  birthDate.value = date;
+                  birthDateController.text =
+                      date.toIso8601String().split('T').first;
+                }),
+          ),
+        ),
+      );
+    }
 
     return PopScope(
       canPop: false,
@@ -47,33 +76,64 @@ class RegisterView extends HookConsumerWidget {
                       ),
                       const SliverToBoxAdapter(child: SizedBox(height: 16)),
                       SliverToBoxAdapter(
-                        child: AppIcons.user_add
-                            .toWidget(size: 64, hasGradientMask: true),
-                      ),
-                      const SliverToBoxAdapter(child: SizedBox(height: 16)),
-                      SliverToBoxAdapter(
-                        child: Text(
-                          'Join to Reqres',
-                          style: s24W700.copyWith(fontWeight: FontWeight.w900),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      const SliverToBoxAdapter(child: SizedBox(height: 16)),
-                      SliverToBoxAdapter(
                         child: Form(
-                          key: formKey,
+                          // key: formKey,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               CustomTextFormField(
+                                hintText: 'Full Name',
+                                controller: nameAndSurnameController,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your name and surname';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              ),
+                              const SizedBox(height: 16),
+                              CustomTextFormField(
+                                hintText: 'Biography',
+                                minLines: 2,
+                                maxLines: 2,
+                                controller: biographyController,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your biography';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              ),
+                              const SizedBox(height: 16),
+                              GestureDetector(
+                                onTap: showDatePicker,
+                                child: CustomTextFormField(
+                                  enabled: false,
+                                  hintText: 'Birth Date',
+                                  controller: birthDateController,
+                                  validator: (value) {
+                                    // suer must be 18 years old
+                                    if (birthDate.value.isAfter(DateTime.now()
+                                        .add(const Duration(days: -6570)))) {
+                                      return 'You must be at least 18 years old';
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              CustomTextFormField(
                                 hintText: 'Email',
                                 controller: emailController,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Please enter some text';
+                                    return 'Please enter a valid email.';
                                   } else if (!value.isValidEmail) {
-                                    return 'Please enter valid email';
+                                    return 'Please enter a valid email';
                                   } else {
                                     return null;
                                   }
@@ -83,6 +143,7 @@ class RegisterView extends HookConsumerWidget {
                               CustomTextFormField(
                                 obscureText: obscurePassword.value,
                                 hintText: 'Password',
+                                maxLines: 1,
                                 controller: passwordController,
                                 suffix: (obscurePassword.value
                                         ? AppIcons.eye
@@ -96,32 +157,6 @@ class RegisterView extends HookConsumerWidget {
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter your password';
-                                  } else if (value.length <= 6) {
-                                    return 'Password must be greater than 6 characters';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                              ),
-                              const SizedBox(height: 16),
-                              CustomTextFormField(
-                                obscureText: obscureConfirmPassword.value,
-                                hintText: 'Confirm Password',
-                                controller: passwordConfirmController,
-                                suffix: (obscureConfirmPassword.value
-                                        ? AppIcons.eye
-                                        : AppIcons.eye_off)
-                                    .toWidget(
-                                  onPressed: () {
-                                    obscureConfirmPassword.value =
-                                        !obscureConfirmPassword.value;
-                                  },
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter your password';
-                                  } else if (value != passwordController.text) {
-                                    return 'Passwords does not match';
                                   } else if (value.length <= 6) {
                                     return 'Password must be greater than 6 characters';
                                   } else {

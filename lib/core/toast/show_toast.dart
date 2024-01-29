@@ -12,19 +12,28 @@ void showToast({
     DelightToastBar(
       autoDismiss: true,
       snackbarDuration: const Duration(seconds: 3),
-      builder: (context) => ToastCard(
-        color: toastType.color,
-        leading: toastType.icon.toWidget(color: Colors.white),
-        title: Text(
-          message,
-          style: const TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: 14,
-            color: Colors.white,
+      builder: (context) => GestureDetector(
+        onHorizontalDragCancel: () {},
+        onHorizontalDragDown: (details) {},
+        onHorizontalDragEnd: (details) {},
+        onHorizontalDragUpdate: (details) {},
+        onHorizontalDragStart: (details) {},
+        child: ToastCard(
+          color: toastType.color,
+          leading: toastType.icon.toWidget(color: Colors.white),
+          title: Text(
+            message,
+            style: const TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 14,
+              color: Colors.white,
+            ),
           ),
         ),
       ),
-    ).show(rootNavigatorKey.currentContext!);
+    )
+      ..remove
+      ..show(rootNavigatorKey.currentContext!);
 
 enum ToastType {
   error,

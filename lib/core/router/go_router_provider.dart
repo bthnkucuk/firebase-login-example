@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hero_games/features/providers/user_provider.dart';
 import '../../custom_tab_view.dart';
 import '../router/routes/auth.dart';
 import '../router/routes/home.dart';
@@ -14,11 +15,24 @@ final goRouterProvider = Provider<GoRouter>(
   (ref) {
     final homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'Home');
 
+    final userListener = ref.watch(userProvider);
+
     return GoRouter(
       initialLocation: '/',
       observers: [AppNavigatorObserver(ref: ref)],
       navigatorKey: rootNavigatorKey,
       debugLogDiagnostics: true,
+      refreshListenable: userListener,
+      redirect: (context, state) {
+        if (userListener.user == null) {
+          return (state.matchedLocation == '/auth/register' ||
+                  state.matchedLocation == '/')
+              ? null
+              : '/auth/login';
+        } else {
+          return null;
+        }
+      },
       routes: <RouteBase>[
         $splashRoute,
         $authRoute,
