@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hero_games/core/router/go_router_provider.dart';
-import 'package:hero_games/core/theme/app_theme_data.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import 'core/router/go_router_provider.dart';
+import 'core/theme/app_theme_data.dart';
 
 void main() async {
   runApp(const ProviderScope(child: MyApp()));

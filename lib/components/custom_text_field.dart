@@ -43,6 +43,7 @@ final class CustomTextFormField extends HookWidget {
     final tController = controller ?? useTextEditingController();
 
     return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       readOnly: readOnly,
       validator: validator,
       focusNode: focusNode,

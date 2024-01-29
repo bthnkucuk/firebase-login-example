@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hero_games/features/auth/view/login_view.dart';
-import 'package:hero_games/features/auth/view/register_view.dart';
+
+import '../../../features/auth/view/login_view.dart';
+import '../../../features/auth/view/register_view.dart';
 
 part 'auth.g.dart';
 

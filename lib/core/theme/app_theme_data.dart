@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hero_games/core/theme/app_colors.dart';
+import 'app_colors.dart';
 
 @immutable
 final class AppThemeData {

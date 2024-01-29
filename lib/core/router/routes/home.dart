@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hero_games/features/home/view/home_view.dart';
+
+import '../../../features/home/view/home_view.dart';
 
 part 'home.g.dart';
 

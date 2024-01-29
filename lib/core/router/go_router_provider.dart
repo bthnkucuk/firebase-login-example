@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hero_games/core/router/routes/auth.dart';
-import 'package:hero_games/core/router/routes/home.dart';
-import 'package:hero_games/custom_tab_view.dart';
+import '../../custom_tab_view.dart';
+import '../router/routes/auth.dart';
+import '../router/routes/home.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 import 'navigator_observer.dart';
 import 'routes/splash.dart';
 

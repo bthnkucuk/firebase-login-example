@@ -4,7 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hero_games/components/gradient_mask.dart';
+
+import '../components/gradient_mask.dart';
 
 /// NOT: [AppIcons] finds the icon path from the [assets/icons] folder.
 enum AppIcons {

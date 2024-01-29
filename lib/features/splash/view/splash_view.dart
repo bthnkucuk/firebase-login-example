@@ -1,10 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:hero_games/components/gradient_background_widget.dart';
-import 'package:hero_games/core/router/routes/auth.dart';
-import 'package:hero_games/core/router/routes/home.dart';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../../components/gradient_background_widget.dart';
+import '../../../core/router/routes/auth.dart';
+import '../../../core/router/routes/home.dart';
 
 @immutable
 final class SplashView extends ConsumerWidget {
