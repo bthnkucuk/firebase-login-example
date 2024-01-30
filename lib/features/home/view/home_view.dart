@@ -96,7 +96,9 @@ class HomeView extends HookConsumerWidget {
                   style: TextStyle(color: Colors.red)),
             ),
         loading: () => const Center(
-              child: CircularProgressIndicator(),
+              child: CupertinoActivityIndicator(
+                color: Colors.white,
+              ),
             ));
   }
 }
