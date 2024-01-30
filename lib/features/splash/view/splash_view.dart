@@ -1,11 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import '/features/auth/providers/user_provider.dart';
-import '/firebase_options.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -30,7 +27,9 @@ final class SplashView extends HookConsumerWidget {
           const HomeRoute().go(context);
         }
       });
-    }, []);
+
+      return null;
+    }, const []);
 
     return const Material(
       child: GradientBackgroundWidget(

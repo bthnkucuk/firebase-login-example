@@ -137,15 +137,6 @@ class RegisterView extends HookConsumerWidget {
                                   enabled: false,
                                   hintText: 'Birth Date',
                                   controller: birthDateController,
-                                  validator: (value) {
-                                    // suer must be 18 years old
-                                    if (birthDate.value.isAfter(DateTime.now()
-                                        .add(const Duration(days: -6570)))) {
-                                      return 'You must be at least 18 years old';
-                                    } else {
-                                      return null;
-                                    }
-                                  },
                                 ),
                               ),
                             ),
@@ -211,6 +202,7 @@ class RegisterView extends HookConsumerWidget {
                             birthDateFormKey,
                             emailFormKey,
                             passwordFormKey,
+                            context: context,
                             model: RegisterRequestModel(
                               fullName: fullNameController.text,
                               biography: biographyController.text,

@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import '/components/app_overlay.dart';
 import '/core/exception/app_exceptions.dart';
 import '/features/auth/model/register_request_model.dart';
 import '/features/auth/model/sign_in_request_model.dart';
@@ -15,6 +18,7 @@ class AuthController extends AutoDisposeNotifier<ScreenState> {
   Future<void> login(
     GlobalKey<FormState> emailFormKey,
     GlobalKey<FormState> passwordFormKey, {
+    required BuildContext context,
     required SignInRequestModel model,
   }) async {
     final isEmailValid = emailFormKey.currentState!.validate();
@@ -25,6 +29,8 @@ class AuthController extends AutoDisposeNotifier<ScreenState> {
     }
 
     state = LoadingState();
+
+    AppOverlayController.showOverlay(context);
 
     try {
       const authService = AuthService();
@@ -38,6 +44,8 @@ class AuthController extends AutoDisposeNotifier<ScreenState> {
       }
       state = ErrorState(message: errorMessage, stackTrace: s);
     }
+
+    AppOverlayController.hideOverlay();
   }
 
   Future<void> register(
@@ -46,6 +54,7 @@ class AuthController extends AutoDisposeNotifier<ScreenState> {
     GlobalKey<FormState> birthDateFormKey,
     GlobalKey<FormState> emailFormKey,
     GlobalKey<FormState> passwordFormKey, {
+    required BuildContext context,
     required RegisterRequestModel model,
   }) async {
     final isFullNameValid = fullNameFormKey.currentState!.validate();
@@ -63,6 +72,7 @@ class AuthController extends AutoDisposeNotifier<ScreenState> {
         !isPasswordValid) {
       return;
     }
+    AppOverlayController.showOverlay(context);
 
     state = LoadingState();
 
@@ -78,9 +88,12 @@ class AuthController extends AutoDisposeNotifier<ScreenState> {
       }
       state = ErrorState(message: errorMessage, stackTrace: s);
     }
+    AppOverlayController.hideOverlay();
   }
 
-  Future<void> logout() async {}
+  Future<void> logout() async {
+    await FirebaseAuth.instance.signOut();
+  }
 }
 
 final authProvider = AutoDisposeNotifierProvider<AuthController, ScreenState>(

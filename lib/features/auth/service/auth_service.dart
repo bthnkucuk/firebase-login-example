@@ -37,6 +37,8 @@ class AuthService {
             .collection('users')
             .doc(firebaseUser.user!.uid)
             .set({
+          'fullName': model.fullName,
+          'email': model.email,
           'biography': model.biography,
           'birthDate': model.birthDate.millisecondsSinceEpoch,
         });

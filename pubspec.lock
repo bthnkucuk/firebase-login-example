@@ -359,7 +359,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_animate:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_animate
       sha256: cabe33af6201144be052352d53572a1b8a4f5782b46080be7520d95abe763715

@@ -9,6 +9,13 @@ import '../components/gradient_mask.dart';
 
 /// NOT: [AppIcons] finds the icon path from the [assets/icons] folder.
 enum AppIcons {
+  trash,
+  hobby_1,
+  hobby_2,
+  hobby_3,
+  hobby_4,
+  exit,
+  add,
   angle_right,
   power,
   check_circle,

@@ -128,6 +128,7 @@ class LoginView extends HookConsumerWidget {
                           title: 'Login',
                           onPressed: () async =>
                               authNotifier.login(emailFormKey, passwordFormKey,
+                                  context: context,
                                   model: SignInRequestModel(
                                     email: emailController.text,
                                     password: passwordController.text,

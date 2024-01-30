@@ -23,6 +23,7 @@ final class CustomTextFormField extends HookWidget {
     this.minLines,
     this.maxLines,
     this.enabled,
+    this.focusNode,
   });
 
   final String? hintText;
@@ -42,10 +43,11 @@ final class CustomTextFormField extends HookWidget {
   final int? minLines;
   final int? maxLines;
   final bool? enabled;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
-    final focusNode = useFocusNode();
+    final focusNodeInside = useFocusNode();
     final tController = controller ?? useTextEditingController();
 
     return TextFormField(
@@ -54,10 +56,10 @@ final class CustomTextFormField extends HookWidget {
       minLines: minLines,
       maxLines: maxLines,
       validator: validator,
-      focusNode: focusNode,
+      focusNode: focusNode ?? focusNodeInside,
       controller: tController,
-      onTap: focusNode.requestFocus,
-      onTapOutside: (_) => focusNode.unfocus(),
+      onTap: (focusNode ?? focusNodeInside).requestFocus,
+      onTapOutside: (_) => (focusNode ?? focusNodeInside).unfocus(),
       onChanged: onChanged,
       autocorrect: false,
       textAlign: textAlign,

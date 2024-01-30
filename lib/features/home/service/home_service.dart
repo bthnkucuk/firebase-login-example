@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class HobbyService {
-  Future<void> add(User user, String hobby) async {
+class HomeService {
+  Future<void> add(String hobby) async {
     if (FirebaseAuth.instance.currentUser?.uid == null) {
       return;
     }
@@ -25,7 +25,7 @@ class HobbyService {
         .set({'user_hobbies': hobbies});
   }
 
-  Future<void> remove(User user, String hobby) async {
+  Future<void> remove(String hobby) async {
     if (FirebaseAuth.instance.currentUser?.uid == null) {
       return;
     }
@@ -43,7 +43,7 @@ class HobbyService {
         .update({'user_hobbies': hobbies});
   }
 
-  Stream<DocumentSnapshot<Map<String, dynamic>>> listen() {
+  Stream<DocumentSnapshot<Map<String, dynamic>>> listenHobbies() {
     return FirebaseFirestore.instance
         .collection('hobbies')
         .doc(FirebaseAuth.instance.currentUser?.uid)
