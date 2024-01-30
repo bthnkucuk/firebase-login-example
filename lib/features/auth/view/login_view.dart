@@ -30,7 +30,7 @@ class LoginView extends HookConsumerWidget {
 
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
-    final obscurePassword = useState<bool>(false);
+    final obscurePassword = useState<bool>(true);
     final emailFormKey = GlobalKey<FormState>(debugLabel: 'emailFormKey');
     final passwordFormKey = GlobalKey<FormState>(debugLabel: 'passwordFormKey');
 
@@ -98,6 +98,7 @@ class LoginView extends HookConsumerWidget {
                               child: CustomTextFormField(
                                 obscureText: obscurePassword.value,
                                 hintText: 'Password',
+                                maxLines: 1,
                                 controller: passwordController,
                                 suffix: (obscurePassword.value
                                         ? AppIcons.eye

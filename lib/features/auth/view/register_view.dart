@@ -33,7 +33,7 @@ class RegisterView extends HookConsumerWidget {
     final biographyController = useTextEditingController();
     final birthDateController = useTextEditingController();
     final passwordController = useTextEditingController();
-    final obscurePassword = useState<bool>(false);
+    final obscurePassword = useState<bool>(true);
     final birthDate = useState<DateTime>(DateTime.now());
 
     final fullNameFormKey = GlobalKey<FormState>();

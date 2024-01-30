@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,19 +49,9 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAgsAdoikJDbG0aTzJWRDda-ewAXxeoqoU',
-    appId: '1:1034594274722:web:17c9743dc0d62af35ab6fb',
-    messagingSenderId: '1034594274722',
-    projectId: 'hero-games-case',
-    authDomain: 'hero-games-case.firebaseapp.com',
-    storageBucket: 'hero-games-case.appspot.com',
-    measurementId: 'G-J6FCQYDNQT',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDSte7QW3u3xs9H9HHbna0Fbcsv_zRPr60',
-    appId: '1:1034594274722:android:2a582ec7fec24a7a5ab6fb',
+    appId: '1:1034594274722:android:1428740de6d7d3195ab6fb',
     messagingSenderId: '1034594274722',
     projectId: 'hero-games-case',
     storageBucket: 'hero-games-case.appspot.com',
@@ -68,14 +64,5 @@ class DefaultFirebaseOptions {
     projectId: 'hero-games-case',
     storageBucket: 'hero-games-case.appspot.com',
     iosBundleId: 'com.example.firebaseLoginExample',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDKyN7BxlKjDsyrd4xk0w241TMzYT1nBmE',
-    appId: '1:1034594274722:ios:2cd590b6d94796395ab6fb',
-    messagingSenderId: '1034594274722',
-    projectId: 'hero-games-case',
-    storageBucket: 'hero-games-case.appspot.com',
-    iosBundleId: 'com.example.firebaseLoginExample.RunnerTests',
   );
 }

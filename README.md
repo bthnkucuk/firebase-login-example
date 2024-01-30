@@ -1,18 +1,41 @@
-# hero_games
+# firebase auth with flutter
 
-A new Flutter project.
+Flutter authentication with firebase auth and firestore.
 
-## Getting Started
+## Notes and Explanation
 
-This project is a starting point for a Flutter application.
+- Application uses MVC-S architecture.
+- For state management, RiverPod package is used.
+- Application uses firebase auth for authentication.
+- Application uses firebase firestore for storing user data.
+- User hobbies are fetching real time from firestore using stream.
+- User authentication is handled with firebase auth stream.
+- Application uses go_router package for routing.
+- Application uses go_router_builder, riverpod_generator for generating routes and providers.
 
-A few resources to get you started if this is your first Flutter project:
+<br />
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Features
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# firebase-login-example
-# firebase-login-example
+- Sign in
+- Sign up
+- Sign out
+- Add hobby
+- Delete hobby
+
+## Demo
+
+<img src="./screenshots/home.png" width=200>
+<img src="./screenshots/sign_in.png" width=200>
+<img src="./screenshots/register.png" width=200>
+<img src="./screenshots/loading_overlay.png" width=200>
+
+## Used Packages and Versions
+
+**Packages:** hooks_riverpod, flutter_hooks, riverpod_annotation, go_router, flutter_screenutil, flutter_svg, delightful_toast, firebase, equatable, flutter_animate
+
+**Dart Version:** 3.2.3
+
+**Flutter Version:** 3.16.4
+
+<br />
