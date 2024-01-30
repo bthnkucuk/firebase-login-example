@@ -7,11 +7,11 @@ import '/features/home/widgets/hobby_border_widget.dart';
 class HobbyWidget extends StatelessWidget {
   const HobbyWidget({
     super.key,
-    required this.hobbiy,
+    required this.hobby,
     this.onDelete,
   });
   final VoidCallback? onDelete;
-  final String hobbiy;
+  final String hobby;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class HobbyWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  hobbiy,
+                  hobby,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: s14W700,

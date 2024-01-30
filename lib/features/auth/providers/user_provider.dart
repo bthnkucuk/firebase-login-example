@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final userProvider =
@@ -13,14 +13,17 @@ class UserController with ChangeNotifier {
   }
 
   void listenUser() async {
-    print("listenuser------------");
     FirebaseAuth.instance.userChanges().listen((User? firebaseUser) {
       user = firebaseUser;
       if (user == null) {
         // TODO
-        print('user is null');
+        if (kDebugMode) {
+          print('user is null');
+        }
       } else {
-        print('user ${user?.email}');
+        if (kDebugMode) {
+          print('user ${user?.email}');
+        }
       }
 
       notifyListeners();

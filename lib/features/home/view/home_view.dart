@@ -6,7 +6,6 @@ import '/components/gradient_background_widget.dart';
 import '/constants/icons.dart';
 import '/core/theme/text_stiles.dart';
 import '/features/auth/controller/auth_controller.dart';
-import '/features/auth/providers/user_provider.dart';
 import '/features/home/controller/hobby_provider.dart';
 import '/features/home/service/home_service.dart';
 import '/features/home/widgets/hobby_border_widget.dart';
@@ -17,8 +16,6 @@ class HomeView extends HookConsumerWidget {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const profilePictureUrl =
-        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
     final hobby = ref.watch(hobbyProvider);
 
     final homeService = HomeService();
@@ -56,7 +53,7 @@ class HomeView extends HookConsumerWidget {
                         itemCount: data.length,
                         itemBuilder: (context, index) {
                           return HobbyWidget(
-                            hobbiy: data[index].toString(),
+                            hobby: data[index].toString(),
                             onDelete: () =>
                                 homeService.remove(data[index].toString()),
                           );
@@ -73,7 +70,7 @@ class HomeView extends HookConsumerWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              HobbyBorderWidget(),
+                              const HobbyBorderWidget(),
                               SizedBox(height: 10.h),
                               Text(
                                 'Add your first hobby',
