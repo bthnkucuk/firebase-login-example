@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hero_games/features/providers/user_provider.dart';
+import '/features/auth/providers/user_provider.dart';
 import '../../custom_tab_view.dart';
 import '../router/routes/auth.dart';
 import '../router/routes/home.dart';

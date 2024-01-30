@@ -13,6 +13,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/text_stiles.dart';
 import '../../../core/toast/show_toast.dart';
 import '../controller/auth_controller.dart';
+import '../model/sign_in_request_model.dart';
 
 class LoginView extends HookConsumerWidget {
   const LoginView({super.key});
@@ -125,12 +126,12 @@ class LoginView extends HookConsumerWidget {
                       SliverToBoxAdapter(
                         child: CustomButton(
                           title: 'Login',
-                          onPressed: () async => authNotifier.login(
-                            emailFormKey,
-                            passwordFormKey,
-                            email: emailController.text,
-                            password: passwordController.text,
-                          ),
+                          onPressed: () async =>
+                              authNotifier.login(emailFormKey, passwordFormKey,
+                                  model: SignInRequestModel(
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                  )),
                         ),
                       ),
                     ],

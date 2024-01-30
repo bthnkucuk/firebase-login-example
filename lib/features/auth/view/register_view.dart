@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import '/features/auth/controller/auth_controller.dart';
+import '/features/auth/model/register_request_model.dart';
 import '../../../components/custom_button.dart';
 import '../../../core/extension/email_validator.dart';
 import '../../../components/custom_text_field.dart';
@@ -8,27 +10,37 @@ import '../../../components/gradient_background_widget.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../constants/icons.dart';
 import '../../../core/router/routes/auth.dart';
+import '../../../core/screen_state/screen_state.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/text_stiles.dart';
+import '../../../core/toast/show_toast.dart';
 
 class RegisterView extends HookConsumerWidget {
   const RegisterView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final authNotifier = ref.watch(authProvider.notifier);
+    final authNotifier = ref.watch(authProvider.notifier);
+
+    ref.listen(authProvider, (_, next) {
+      if (next is ErrorState && next != _) {
+        showToast(message: next.message);
+      }
+    });
 
     final emailController = useTextEditingController();
-    final nameAndSurnameController = useTextEditingController();
+    final fullNameController = useTextEditingController();
     final biographyController = useTextEditingController();
     final birthDateController = useTextEditingController();
     final passwordController = useTextEditingController();
-    final passwordConfirmController = useTextEditingController();
     final obscurePassword = useState<bool>(false);
-    final obscureConfirmPassword = useState<bool>(false);
     final birthDate = useState<DateTime>(DateTime.now());
 
-    // final formKey = GlobalKey<FormState>();
+    final fullNameFormKey = GlobalKey<FormState>();
+    final biographyFormKey = GlobalKey<FormState>();
+    final birthDateFormKey = GlobalKey<FormState>();
+    final emailFormKey = GlobalKey<FormState>();
+    final passwordFormKey = GlobalKey<FormState>();
 
     void showDatePicker() {
       showCupertinoModalPopup<void>(
@@ -76,15 +88,16 @@ class RegisterView extends HookConsumerWidget {
                       ),
                       const SliverToBoxAdapter(child: SizedBox(height: 16)),
                       SliverToBoxAdapter(
-                        child: Form(
-                          // key: formKey,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              CustomTextFormField(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Form(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              key: fullNameFormKey,
+                              child: CustomTextFormField(
                                 hintText: 'Full Name',
-                                controller: nameAndSurnameController,
+                                controller: fullNameController,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter your name and surname';
@@ -93,8 +106,13 @@ class RegisterView extends HookConsumerWidget {
                                   }
                                 },
                               ),
-                              const SizedBox(height: 16),
-                              CustomTextFormField(
+                            ),
+                            const SizedBox(height: 16),
+                            Form(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              key: biographyFormKey,
+                              child: CustomTextFormField(
                                 hintText: 'Biography',
                                 minLines: 2,
                                 maxLines: 2,
@@ -107,9 +125,14 @@ class RegisterView extends HookConsumerWidget {
                                   }
                                 },
                               ),
-                              const SizedBox(height: 16),
-                              GestureDetector(
-                                onTap: showDatePicker,
+                            ),
+                            const SizedBox(height: 16),
+                            GestureDetector(
+                              onTap: showDatePicker,
+                              child: Form(
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                key: birthDateFormKey,
                                 child: CustomTextFormField(
                                   enabled: false,
                                   hintText: 'Birth Date',
@@ -125,8 +148,13 @@ class RegisterView extends HookConsumerWidget {
                                   },
                                 ),
                               ),
-                              const SizedBox(height: 16),
-                              CustomTextFormField(
+                            ),
+                            const SizedBox(height: 16),
+                            Form(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              key: emailFormKey,
+                              child: CustomTextFormField(
                                 hintText: 'Email',
                                 controller: emailController,
                                 validator: (value) {
@@ -139,8 +167,13 @@ class RegisterView extends HookConsumerWidget {
                                   }
                                 },
                               ),
-                              const SizedBox(height: 16),
-                              CustomTextFormField(
+                            ),
+                            const SizedBox(height: 16),
+                            Form(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              key: passwordFormKey,
+                              child: CustomTextFormField(
                                 obscureText: obscurePassword.value,
                                 hintText: 'Password',
                                 maxLines: 1,
@@ -157,22 +190,35 @@ class RegisterView extends HookConsumerWidget {
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter your password';
-                                  } else if (value.length <= 6) {
+                                  } else if (value.length < 6) {
                                     return 'Password must be greater than 6 characters';
                                   } else {
                                     return null;
                                   }
                                 },
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                       const SliverToBoxAdapter(child: SizedBox(height: 32)),
                       SliverToBoxAdapter(
                         child: CustomButton(
                           title: 'Register',
-                          onPressed: () {},
+                          onPressed: () => authNotifier.register(
+                            fullNameFormKey,
+                            biographyFormKey,
+                            birthDateFormKey,
+                            emailFormKey,
+                            passwordFormKey,
+                            model: RegisterRequestModel(
+                              fullName: fullNameController.text,
+                              biography: biographyController.text,
+                              birthDate: birthDate.value,
+                              email: emailController.text,
+                              password: passwordController.text,
+                            ),
+                          ),
                         ),
                       ),
                     ],

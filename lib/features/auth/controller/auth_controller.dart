@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hero_games/core/exception/app_exceptions.dart';
+import '/core/exception/app_exceptions.dart';
+import '/features/auth/model/register_request_model.dart';
+import '/features/auth/model/sign_in_request_model.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -13,12 +15,12 @@ class AuthController extends AutoDisposeNotifier<ScreenState> {
   Future<void> login(
     GlobalKey<FormState> emailFormKey,
     GlobalKey<FormState> passwordFormKey, {
-    required String email,
-    required String password,
+    required SignInRequestModel model,
   }) async {
-    if (!emailFormKey.currentState!.validate() ||
-        !passwordFormKey.currentState!.validate()) {
-      print('validate faild');
+    final isEmailValid = emailFormKey.currentState!.validate();
+    final isPasswordValid = passwordFormKey.currentState!.validate();
+
+    if (!isEmailValid || !isPasswordValid) {
       return;
     }
 
@@ -26,7 +28,47 @@ class AuthController extends AutoDisposeNotifier<ScreenState> {
 
     try {
       const authService = AuthService();
-      await authService.login(email, password);
+      await authService.login(model);
+    } catch (e, s) {
+      final String errorMessage;
+      if (e is AppException) {
+        errorMessage = e.message;
+      } else {
+        errorMessage = 'Unknown Error';
+      }
+      state = ErrorState(message: errorMessage, stackTrace: s);
+    }
+  }
+
+  Future<void> register(
+    GlobalKey<FormState> fullNameFormKey,
+    GlobalKey<FormState> biographyFormKey,
+    GlobalKey<FormState> birthDateFormKey,
+    GlobalKey<FormState> emailFormKey,
+    GlobalKey<FormState> passwordFormKey, {
+    required RegisterRequestModel model,
+  }) async {
+    final isFullNameValid = fullNameFormKey.currentState!.validate();
+    final isBiographyValid = biographyFormKey.currentState!.validate();
+    final isBirthDateValid = birthDateFormKey.currentState!.validate();
+    final isEmailValid = emailFormKey.currentState!.validate();
+    final isPasswordValid = passwordFormKey.currentState!.validate();
+
+    state = LoadingState();
+
+    if (!isFullNameValid ||
+        !isBiographyValid ||
+        !isBirthDateValid ||
+        !isEmailValid ||
+        !isPasswordValid) {
+      return;
+    }
+
+    state = LoadingState();
+
+    try {
+      const authService = AuthService();
+      await authService.register(model);
     } catch (e, s) {
       final String errorMessage;
       if (e is AppException) {
